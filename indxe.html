@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alejandra P. — Servicios Legales</title>
+<style>
+  /*
+  ============================================================
+  🎨 VARIABLES GLOBALES DE COLOR
+  Cambia estos valores para modificar los colores de toda la página.
+  --black:    fondo principal oscuro
+  --dark:     fondo secciones oscuras secundarias
+  --orange:   color dorado/acento de botones y detalles
+  --white:    color de textos sobre fondo oscuro
+  --darkblue: color azul oscuro (logo y textos sobre fondo claro)
+  --gray:     color de textos secundarios/descriptivos
+  --light:    fondo de secciones claras
+  ============================================================
+  */
+  :root {
+    --black:  #0d0d0d;
+    --dark:   #151515;
+    --dark2:  #1c1c1c;
+    --orange:   #d1a01b;
+    --orange2:  #d1a01b;
+    --white:  #ffffff;
+    --darkblue:  #253a4b;
+    --gray:   #aaaaaa;
+    --light:  #f4f4f4;
+    --border: rgb(255, 255, 255);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Times New Roman', serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: var(--dark2);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--dark2);
+  }
+  .topbar-left { display: flex; gap: 28px; align-items: center; }
+  .topbar-left a { color: var(--dark2); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color .2s; }
+  .topbar-left a:hover { color: var(--cyan); }
+  .topbar-right { display: flex; align-items: center; gap: 20px; }
+  .topbar-socials { display: flex; gap: 14px; }
+  .topbar-socials a { color: var(--white); text-decoration: none; font-size: 0.8rem; transition: color .2s; }
+  .topbar-socials a:hover { color: var(--cyan); }
+  .btn-member {
+    padding: 6px 18px;
+    border: 1px solid rgba(255,255,255,0.4);
+    color: var(--white);
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    transition: background .2s, color .2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .btn-member:hover { background: var(--white); color: var(--black); }
+
+  /* ── NAVBAR ── */
+  /* ✏️ FONDO NAVBAR: cambia el color rgba(255,255,255,0.97) por el color que prefieras. Ejemplos: #162336 azul oscuro | #000000 negro | transparent */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(10px);
+    padding: 0 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Times New Roman', serif;
+    font-size: 1.4rem; font-weight: 900;
+    color: var(--darkblue);
+    letter-spacing: 1px; text-transform: uppercase; line-height: 1;
+    text-decoration: none;
+  }
+  .logo span { display: block; font-size: 0.52rem; font-weight: 400; letter-spacing: 4px; color: var(--cyan); margin-top: 2px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    color: #253a4b; text-decoration: none; /* ✏️ COLOR BOTONES NAV: cambia #253a4b por el color que prefieras */
+    font-family: 'Times New Roman', serif;
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px;
+    padding-bottom: 4px; position: relative; transition: color .2s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 2px; background: var(--cyan); transition: width .3s;
+  }
+  .nav-links a:hover { color: var(--cyan); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ── SHARED ── */
+  .section-tag {
+    font-family: 'Times New Roman', serif;
+    font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 4px; text-transform: uppercase; color: var(--cyan);
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-tag::before { content: ''; display: inline-block; width: 28px; height: 2px; background: var(--darkblue); }
+  .section-title {
+    font-family: 'Times New Roman', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800; text-transform: uppercase; line-height: 1.05; margin-bottom: 16px;
+  }
+  .section-desc { font-size: 0.9rem; line-height: 1.8; color: var(--gray); max-width: 540px; margin-bottom: 50px; }
+
+  /* ── HERO ── */
+  #inicio {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    overflow: hidden; padding: 80px 40px 60px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    /* REEMPLAZA con tu imagen hero */
+    background: url('https://i.postimg.cc/L8ff3ncR/gavel-scales-justice-courtroom.jpg') center/cover no-repeat;
+    filter: brightness(0.22);
+    z-index: 0;
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 75% 55%, rgba(0,150,199,0.08) 0%, transparent 60%);
+    z-index: 1;
+  }
+  /* circuit decoration rings */
+  .ring {
+    position: absolute; border-radius: 50%;
+    border: 1px solid rgba(0,180,216,0.12); z-index: 1; pointer-events: none;
+  }
+  .ring1 { width: 320px; height: 320px; right: 5%; bottom: 3%; }
+  .ring2 { width: 230px; height: 230px; right: 9.5%; bottom: 9.5%; }
+  .ring3 { width: 140px; height: 140px; right: 14.5%; bottom: 15.5%; }
+  /* left circuit dot cluster */
+  .dot-grid {
+    position: absolute; left: 3%; top: 60%;
+    display: grid; grid-template-columns: repeat(6,8px); gap: 6px; z-index: 1;
+  }
+  .dot-grid span { width: 2px; height: 2px; background: rgba(0,180,216,0.3); border-radius: 50%; display: block; }
+
+  .hero-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+    color: var(--white); width: 42px; height: 42px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 1.2rem; transition: background .2s; user-select: none;
+  }
+  .hero-arrow:hover { background: var(--cyan); }
+  .hero-arrow.left { left: 20px; }
+  .hero-arrow.right { right: 20px; }
+
+  .hero-content { position: relative; z-index: 2; animation: fadeUp .9s ease both; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+
+  .hero-name {
+    font-family: 'Times New Roman', serif;
+    font-size: clamp(3.5rem, 9vw, 7.5rem);
+    font-weight: 900; text-transform: uppercase; letter-spacing: 2px; line-height: 1;
+    margin-bottom: 14px; animation: fadeUp .9s .1s ease both;
+  }
+  .hero-subtitle {
+    font-family: 'Times New Roman', serif;
+    font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+    font-weight: 700; letter-spacing: 6px; text-transform: uppercase;
+    margin-bottom: 18px; animation: fadeUp .9s .2s ease both;
+  }
+  .hero-text {
+    font-size: 0.9rem; color: var(--orange); max-width: 400px;
+    margin: 0 auto 36px; line-height: 1.7; animation: fadeUp .9s .3s ease both;
+  }
+  .btn-cyan {
+    display: inline-block; padding: 13px 36px;
+    background: var(--cyan); color: var(--white);
+    font-family: 'Times New Roman', serif; font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 1px; text-decoration: none; border: none; cursor: pointer;
+    transition: background .2s, transform .2s; animation: fadeUp .9s .4s ease both;
+  }
+  .btn-cyan:hover { background: var(--cyan2); transform: translateY(-2px); }
+
+  /* ── FRAMES GRID ── */
+  .frames-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 14px; width: 100%; max-width: 1400px;
+  }
+  .frame-card {
+    position: relative; height: 280px; overflow: hidden;
+    cursor: pointer; background: var(--dark2);
+  }
+  .frame-card img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .6s ease;
+    filter: brightness(0.42) saturate(0.65);
+  }
+  .frame-card:hover img { transform: scale(1.06); filter: brightness(0.28); }
+  .frame-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 15%, rgba(13,13,13,0.86) 100%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-end;
+    padding: 22px 16px; gap: 9px;
+  }
+  .frame-icon { font-size: 1.7rem; line-height: 1; }
+  .frame-title {
+    font-family: 'Times New Roman', serif; font-size: 0.78rem; font-weight: 700;
+    text-align: center; text-transform: uppercase; letter-spacing: 0.8px;
+    line-height: 1.3; color: var(--white);
+  }
+  .frame-btn {
+    display: inline-block; padding: 8px 22px;
+    background: var(--orange); color: var(--dark);
+    font-family: 'Times New Roman', serif; font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase; text-decoration: none;
+    border: none; cursor: pointer; transition: background .2s, transform .15s;
+    border-radius: 8px;
+  }
+  .frame-btn:hover { background: var(--cyan2); transform: translateY(-1px); }
+
+  /* ── SECTION WRAPPERS ── */
+  .sec-dark    { background: var(--dark);  padding: 90px 60px; }
+  .sec-darker  { background: var(--black); padding: 90px 60px; }
+  .sec-light   { background: var(--light); padding: 80px 60px; color: var(--black); }
+  .sec-light .section-title { color: var(--black); }
+  .sec-light .section-desc  { color: #555; }
+  .sec-light .section-tag   { color: var(--cyan2); }
+  .sec-light .section-tag::before { background: var(--cyan2); }
+
+  /* ── NOSOTROS ── */
+  .about-split {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: center; margin-bottom: 64px; max-width: 960px;
+  }
+  .about-text p { font-size: 0.88rem; color: var(--gray); line-height: 1.8; margin-bottom: 14px; }
+  .signature { font-family: 'Times New Roman', serif; font-size: 1.7rem; font-weight: 300; font-style: italic; color: var(--white); margin: 22px 0 4px; }
+  .signature-role { font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase; color: var(--cyan); }
+  .about-photo { width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top; }
+  .about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; filter: grayscale(20%) brightness(0.75); }
+
+  /* ── FEATURES ── */
+  .features-list { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 60px; margin-top: 36px; max-width: 760px; }
+  .feat {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Times New Roman', serif; font-size: 0.85rem; font-weight: 600; color: #222;
+  }
+  .feat::before { content: '✓'; color: var(--cyan2); font-weight: 800; flex-shrink: 0; }
+
+  /* ── EQUIPO ── */
+  .team-card {
+    position: relative; height: 340px; overflow: hidden;
+    background: var(--dark2); cursor: pointer;
+  }
+  .team-card img {
+    width: 100%; height: 100%; object-fit: cover; object-position: top;
+    filter: brightness(0.5) saturate(0.5); transition: transform .5s ease, filter .4s ease;
+  }
+  .team-card:hover img { transform: scale(1.04); filter: brightness(0.3); }
+  .team-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 35%, rgba(13,13,13,0.95) 100%);
+    display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+    padding: 20px 14px; gap: 4px;
+  }
+  .team-name { font-family: 'Barlow', sans-serif; font-size: 0.95rem; font-weight: 700; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; }
+  .team-role { font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase; color: var(--cyan); text-align: center; margin-bottom: 8px; }
+
+  /* ── BLOG ── */
+  .blog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; max-width: 960px; margin-top: 36px; }
+  .blog-card { background: var(--white); overflow: hidden; border-bottom: 3px solid transparent; transition: border-color .3s; }
+  .blog-card:hover { border-color: var(--cyan); }
+  .blog-card img { width: 100%; height: 160px; object-fit: cover; display: block; }
+  .blog-body { padding: 18px 20px 22px; }
+  .blog-date { font-size: 0.65rem; color: #999; letter-spacing: 1px; margin-bottom: 6px; }
+  .blog-title { font-family: 'Barlow', sans-serif; font-size: 0.92rem; font-weight: 800; text-transform: uppercase; color: #111; line-height: 1.3; margin-bottom: 8px; }
+  .blog-excerpt { font-size: 0.78rem; color: #666; line-height: 1.6; margin-bottom: 16px; }
+  .btn-read { display: inline-block; padding: 9px 24px; background: var(--white); color: var(--white); font-family: 'Barlow', sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 1px; text-decoration: none; transition: background .2s; }
+  .btn-read:hover { background: var(--dark); }
+
+  /* ── PARTNERS ── */
+  .partners-row { display: flex; align-items: center; justify-content: center; gap: 56px; flex-wrap: wrap; padding: 36px 0; }
+  .partner { opacity: 0.5; font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #333; transition: opacity .3s; cursor: default; }
+  .partner:hover { opacity: 1; }
+
+  /* ── FOOTER ── */
+  footer { background: var(--black); padding: 60px 60px 36px; position: relative; overflow: hidden; border-top: 1px solid var(--border); }
+  .footer-deco { position: absolute; left: -50px; bottom: -50px; width: 300px; height: 300px; border-radius: 50%; border: 1px solid rgba(0,180,216,0.08); pointer-events: none; }
+  .footer-deco2 { width: 200px; height: 200px; left: -10px; bottom: -10px; }
+  .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1.5fr 1fr; gap: 48px; margin-bottom: 40px; }
+  .footer-col h4 { font-family: 'Barlow', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--white); margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid var(--cyan); display: inline-block; }
+  .footer-col p, .footer-col a { font-size: 0.8rem; color: var(--gray); line-height: 1.8; text-decoration: none; display: block; }
+  .footer-col a:hover { color: var(--cyan); }
+  .nl-form { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+  .nl-form input { background: #1a1a1a; border: 1px solid rgba(255,255,255,0.1); color: var(--white); padding: 10px 14px; font-family: 'Source Sans 3', sans-serif; font-size: 0.78rem; outline: none; transition: border-color .2s; }
+  .nl-form input:focus { border-color: var(--cyan); }
+  .nl-form input::placeholder { color: #555; }
+  .nl-form button { padding: 11px; background: var(--orange); border: none; color: var(--white); font-family: 'Barlow', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: background .2s; border-radius: 8px; }
+  .nl-form button:hover { background: var(--cyan2); }
+  .social-row { display: flex; gap: 12px; margin-top: 8px; }
+  .social-row a { color: var(--gray); font-size: 0.85rem; text-decoration: none; width: 32px; height: 32px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; transition: color .2s, border-color .2s; }
+  .social-row a:hover { color: var(--cyan); border-color: var(--cyan); }
+  .footer-bottom { border-top: 1px solid var(--border); padding-top: 22px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 0.7rem; color: #555; }
+
+  /* ── REVEAL ── */
+  .reveal { opacity:0; transform:translateY(22px); transition: opacity .65s ease, transform .65s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .rd1{transition-delay:.1s} .rd2{transition-delay:.2s} .rd3{transition-delay:.3s} .rd4{transition-delay:.4s} .rd5{transition-delay:.5s}
+
+  /* ── SECCIONES DESPLEGABLES ── */
+.seccion-desplegable {
+  display: none; 
+  margin-top: 30px; 
+  padding: 40px; 
+  background: #1c1c1c; 
+  border-left: 4px solid #d1a01b;
+  border-radius: 8px;
+  /* Añadido para debug */
+  border: 2px solid var(--orange) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  position: relative !important;
+  z-index: 1000 !important;
+}
+
+.seccion-desplegable[style*="display: block"] {
+  display: block !important;
+}
+
+.seccion-desplegable h3 {
+  color: #d1a01b; 
+  margin-bottom: 16px; 
+  font-size: 1.3rem;
+  font-family: 'Times New Roman', serif;
+}
+
+.seccion-desplegable p {
+  color: #aaa; 
+  line-height: 1.8;
+  font-size: 0.9rem;
+}
+
+  @media(max-width:960px){
+    .topbar{display:none;}
+    nav{padding:0 24px;} .nav-links{gap:16px;}
+    .sec-dark,.sec-darker,.sec-light{padding:70px 24px;}
+    .frames-grid{grid-template-columns:repeat(2,1fr);}
+    .about-split{grid-template-columns:1fr;}
+    .blog-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    #inicio{padding:80px 24px 40px;}
+  }
+  .resizable-image {
+    resize: both;
+    overflow: auto;
+    border: 1px solid rgba(255,255,255,0.1);
+    width: 100%;
+    height: 100%;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#inicio" class="logo">
+    <img src="https://i.postimg.cc/6qHJHpxJ/Ale.png" alt="Logo" style="height: 70px; width: auto; display: block;">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#equipo">Equipo</a></li>
+    <li><a href="#areas">Áreas de Práctica</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- ══ INICIO ══ -->
+<section id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="ring ring1"></div>
+  <div class="ring ring2"></div>
+  <div class="ring ring3"></div>
+  <div class="dot-grid">
+    <script>for(let i=0;i<36;i++) document.write('<span></span>')</script>
+  </div>
+
+   <div class="hero-content">
+    <!-- SOLO EL LOGO -->
+    <img src="https://i.postimg.cc/dV2ZDb8g/Ale-copia.png" 
+         alt="Alejandra Pertuz - Servicios Legales" 
+         style="max-width: 500px; width: 80%; height: auto;">
+  </div>
+
+  <!-- 5 frames Inicio -->
+  <div class="frames-grid" style="margin-top:60px; position:relative; z-index:2;">
+    <!-- ... (mantener las tarjetas igual) ... -->
+  </div>
+
+  <!-- ... (mantener secciones desplegables igual) ... -->
+</section>
+
+  <!-- 5 frames Inicio -->
+  <div class="frames-grid" style="margin-top:60px; position:relative; z-index:2;">
+    <div class="frame-card reveal rd1">
+      <img src="https://i.postimg.cc/KcMXnJCP/internacional.jpg" alt="Derecho Comercial">
+      <div class="frame-overlay">
+        <div class="frame-icon"></div>
+        <div class="frame-title">Derecho Comercial</div>
+        <a href="#" class="frame-btn" onclick="toggleSeccion('inicio-comercial'); return false;">Más Detalles</a>
+      </div>
+    </div>
+    <div class="frame-card reveal rd2">
+      <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600" alt="Consultoría">
+      <div class="frame-overlay">
+        <div class="frame-icon"></div>
+        <div class="frame-title">Consultoría Legal</div>
+        <a href="#" class="frame-btn" onclick="toggleSeccion('inicio-consultoria'); return false;">Más Detalles</a>
+      </div>
+    </div>
+    <div class="frame-card reveal rd3">
+      <img src="https://i.postimg.cc/DyrtNmv8/corporativo.jpg" alt="Corporativo">
+      <div class="frame-overlay">
+        <div class="frame-icon"></div>
+        <div class="frame-title">Derecho Corporativo</div>
+        <a href="#" class="frame-btn" onclick="toggleSeccion('inicio-corporativo'); return false;">Más Detalles</a>
+      </div>
+    </div>
+    <div class="frame-card reveal rd4">
+      <img src="https://i.postimg.cc/9X73GJsZ/tributario.jpg" alt="Tributario">
+      <div class="frame-overlay">
+        <div class="frame-icon"></div>
+        <div class="frame-title">Derecho Tributario</div>
+        <a href="#" class="frame-btn" onclick="toggleSeccion('inicio-tributario'); return false;">Más Detalles</a>
+      </div>
+    </div>
+    <div class="frame-card reveal rd5">
+      <img src="https://i.postimg.cc/wxmKh0ns/litigio.jpg" alt="Litigios">
+      <div class="frame-overlay">
+        <div class="frame-icon"></div>
+        <div class="frame-title">Litigios</div>
+        <a href="#" class="frame-btn" onclick="toggleSeccion('inicio-litigios'); return false;">Más Detalles</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENIDO DESPLEGABLE INICIO -->
+  <div id="inicio-comercial" class="seccion-desplegable">
+    <h3>Derecho Comercial</h3>
+    <p>Asesoramiento en contratos mercantiles, fusiones y adquisiciones, derecho societario y regulación de mercados. Brindamos soluciones integrales para empresas de todos los tamaños.</p>
+  </div>
+
+  <div id="inicio-consultoria" class="seccion-desplegable">
+    <h3>Consultoría Legal</h3>
+    <p>Asesoramiento integral para empresas y particulares en diversos aspectos legales, previniendo riesgos y optimizando procesos. Análisis de casos complejos y estrategias personalizadas.</p>
+  </div>
+
+  <div id="inicio-corporativo" class="seccion-desplegable">
+    <h3>Derecho Corporativo</h3>
+    <p>Gestión de estructuras corporativas, gobierno societario, compliance y asesoramiento a directivos y consejos de administración. Optimización de la estructura legal de su empresa.</p>
+  </div>
+
+  <div id="inicio-tributario" class="seccion-desplegable">
+    <h3>Derecho Tributario</h3>
+    <p>Planificación fiscal, defensa en procedimientos de inspección, recursos y asesoramiento en obligaciones tributarias. Minimizamos su carga fiscal dentro del marco legal.</p>
+  </div>
+
+  <div id="inicio-litigios" class="seccion-desplegable">
+    <h3>Litigios</h3>
+    <p>Representación en procesos judiciales civiles, mercantiles y administrativos, con estrategias personalizadas para cada caso. Defensa agresiva de sus derechos e intereses.</p>
+  </div>
+</section>
+
+<!-- ══ NOSOTROS ══ -->
+<section id="nosotros" class="sec-dark">
+  <div class="about-split reveal">
+    <div class="about-text">
+      <p class="section-tag">Sobre Nosotros</p>
+      <h2 class="section-title">Quiénes<br>Somos</h2>
+      <p>Somos una firma de abogados comprometida con brindar soluciones jurídicas innovadoras. Usamos la tecnología como palanca para mejorar el acceso a la justicia y el ejercicio del derecho.</p>
+      <p>Una comunidad de abogados promoviendo el acceso a la justicia a través de la innovación y la tecnología.</p>
+      <div class="signature">Alejandra Pertuz</div>
+      <div class="signature-role">Fundadora</div>
+    </div>
+    <div class="about-photo">
+      <img src="https://i.postimg.cc/R0YnJ0xQ/Use_the_reference_image_as_the_identity_source_for_delpmaspu_copia.png" alt="Fundadora">
+    </div>
+  </div>
+
+  
+
+  <!-- CONTENIDO DESPLEGABLE NOSOTROS -->
+  <div id="nosotros-oficina" class="seccion-desplegable">
+    <h3>Nuestra Oficina</h3>
+    <p>Contamos con instalaciones modernas y tecnológicamente equipadas para brindar el mejor servicio a nuestros clientes. Ubicada en el corazón financiero de la ciudad.</p>
+  </div>
+
+  <div id="nosotros-mision" class="seccion-desplegable">
+    <h3>Nuestra Misión</h3>
+    <p>Proveer servicios legales de excelencia, innovando constantemente en nuestras prácticas para ofrecer soluciones efectivas y personalizadas a cada cliente.</p>
+  </div>
+
+  <div id="nosotros-valores" class="seccion-desplegable">
+    <h3>Nuestros Valores</h3>
+    <p>Integridad, excelencia, innovación y compromiso con nuestros clientes. Estos valores guían cada decisión y acción en nuestra firma.</p>
+  </div>
+
+  <div id="nosotros-membresia" class="seccion-desplegable">
+    <h3>Membresía</h3>
+    <p>Programas exclusivos de membresía para empresas que requieren atención legal continua y servicios premium con tarifas preferenciales.</p>
+  </div>
+
+  <div id="nosotros-coworking" class="seccion-desplegable">
+    <h3>Co-Working Space</h3>
+    <p>Espacios colaborativos para abogados independientes y startups legales, fomentando la innovación y el networking profesional.</p>
+  </div>
+</section>
+
+<!-- Features light strip -->
+<div class="sec-light">
+  <p class="section-tag reveal">Lo que ofrecemos</p>
+  <p class="section-desc reveal">La firma ofrece el nexo entre tecnología y derecho de las siguientes maneras:</p>
+  <div class="features-list reveal">
+    <div class="feat">Incubación de Startups</div>
+    <div class="feat">Entrenamientos y Eventos</div>
+    <div class="feat">Espacio de Co-Innovación para Abogados</div>
+    <div class="feat">Mentoría</div>
+    <div class="feat">Soporte Legal y de Política para Startups</div>
+    <div class="feat">Acceso a Red de Contactos</div>
+  </div>
+</div>
+
+<!-- ══ EQUIPO ══ -->
+<section id="equipo" class="sec-darker">
+  <p class="section-tag reveal">Los profesionales</p>
+  <h2 class="section-title reveal">Nuestro Equipo</h2>
+  <p class="section-desc reveal">Abogados especializados, formados en las mejores universidades, con amplia experiencia en sus áreas de práctica.</p>
+
+  <div class="frames-grid">
+    <div class="team-card reveal rd1">
+      <img src="https://i.postimg.cc/R0YnJ0xQ/Use_the_reference_image_as_the_identity_source_for_delpmaspu_copia.png" alt="Dra. Alejandra P.">
+      <div class="team-overlay">
+        <div class="team-name">Dra. Alejandra P.</div>
+        <div class="team-role">Fundadora · Derecho Civil</div>
+        <a href="#" class="frame-btn" onclick="toggleSeccion('equipo-alejandra'); return false;">Ver Perfil</a>
+      </div>
+    </div>
+    <div class="team-card reveal rd2">
+      <div class="">
+        <img src="https://i.postimg.cc/cH9mkW3k/2.png" alt="Dra. Maria">
+      </div>
+      <div class="team-overlay">
+        <div class="team-name">Dra. Maria R.</div>
+        <div class="team-role">Socia · Derecho Corporativo</div>
+        <a href="#" class="frame-btn" onclick="toggleSeccion('equipo-maria'); return false;">Ver Perfil</a>
+      </div>
+    </div>
+    <div class="team-card reveal rd3">
+      <img src="https://i.postimg.cc/cH9mkW3k/2.png" alt="Dr. Andrés">
+      <div class="team-overlay">
+        <div class="team-name">Dr. Andrés V.</div>
+        <div class="team-role">Socio · Litigios</div>
+        <a href="#" class="frame-btn" onclick="toggleSeccion('equipo-andres'); return false;">Ver Perfil</a>
+      </div>
+    </div>
+    <div class="team-card reveal rd4">
+      <img src="https://i.postimg.cc/xTKsYwVm/1.png" alt="Dra. Valentina">
+      <div class="team-overlay">
+        <div class="team-name">Dra. Valentina O.</div>
+        <div class="team-role">Socia · Propiedad Intelectual</div>
+        <a href="#" class="frame-btn" onclick="toggleSeccion('equipo-valentina'); return false;">Ver Perfil</a>
+      </div>
+    </div>
+    <div class="team-card reveal rd5">
+      <img src="https://i.postimg.cc/cH9mkW3k/2.png" alt="Dr. Sebastián">
+      <div class="team-overlay">
+        <div class="team-name">Dr. Sebastián M.</div>
+        <div class="team-role">Socio · Derecho Laboral</div>
+        <a href="#" class="frame-btn" onclick="toggleSeccion('equipo-sebastian'); return false;">Ver Perfil</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENIDO DESPLEGABLE EQUIPO -->
+  <div id="equipo-alejandra" class="seccion-desplegable">
+    <h3>Dra. Alejandra P. - Fundadora · Derecho Civil</h3>
+    <p>Fundadora de la firma, especialista en derecho civil y propiedad horizontal. Con más de 20 años de experiencia, ha representado a importantes desarrolladores inmobiliarios.</p>
+  </div>
+
+  <div id="equipo-maria" class="seccion-desplegable">
+    <h3>Dra. Maria R. - Socia · Derecho Corporativo</h3>
+    <p>Especialista en derecho corporativo con más de 15 años de experiencia. Graduado de la Universidad de los Andes, ha liderado importantes fusiones y adquisiciones en el sector financiero.</p>
+  </div>
+
+  <div id="equipo-andres" class="seccion-desplegable">
+    <h3>Dr. Andrés V. - Socio · Litigios</h3>
+    <p>Experto en litigios civiles y comerciales. Ha ganado más de 200 casos en cortes superiores y es reconocido por sus estrategias innovadoras en litigación compleja.</p>
+  </div>
+
+  <div id="equipo-valentina" class="seccion-desplegable">
+    <h3>Dra. Valentina O. - Socia · Propiedad Intelectual</h3>
+    <p>Especialista en propiedad intelectual y nuevas tecnologías. Ha asesorado a startups tecnológicas y empresas establecidas en protección de marcas y patentes.</p>
+  </div>
+
+  <div id="equipo-sebastian" class="seccion-desplegable">
+    <h3>Dr. Sebastián M. - Socio · Derecho Laboral</h3>
+    <p>Experto en derecho laboral y relaciones industriales. Ha implementado programas de compliance laboral en más de 50 empresas multinacionales.</p>
+  </div>
+</section>
+
+<!-- ══ ÁREAS DE PRÁCTICA ══ -->
+<section id="areas" class="sec-dark">
+  <p class="section-tag reveal">Especialización</p>
+  <h2 class="section-title reveal">Áreas de Práctica</h2>
+  <p class="section-desc reveal">Cubrimos todas las áreas del derecho empresarial con equipos especializados y una metodología orientada a resultados.</p>
+
+  <div class="frames-grid">
+    <div class="frame-card reveal rd1">
+      <img src="https://i.postimg.cc/vBGzcHRc/comercion-inter.jpg" alt="Comercial Internacional">
+      <div class="frame-overlay">
+        <div class="frame-icon"></div>
+        <div class="frame-title">Derecho Comercial Internacional</div>
+        <a href="#" class="frame-btn" onclick="toggleSeccion('areas-comercial'); return false;">Más Detalles</a>
+      </div>
+    </div>
+    <div class="frame-card reveal rd2">
+      <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600" alt="Aguas">
+      <div class="frame-overlay">
+        <div class="frame-icon"></div>
+        <div class="frame-title">Derecho de Aguas y Recursos</div>
+        <a href="#" class="frame-btn" onclick="toggleSeccion('areas-aguas'); return false;">Más Detalles</a>
+      </div>
+    </div>
+    <div class="frame-card reveal rd3">
+      <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600" alt="Transportes">
+      <div class="frame-overlay">
+        <div class="frame-icon"></div>
+        <div class="frame-title">Transportes y Seguros</div>
+        <a href="#" class="frame-btn" onclick="toggleSeccion('areas-transportes'); return false;">Más Detalles</a>
+      </div>
+    </div>
+    <div class="frame-card reveal rd4">
+      <img src="https://i.postimg.cc/9X73GJsZ/tributario.jpg" alt="Tributario">
+      <div class="frame-overlay">
+        <div class="frame-icon"></div>
+        <div class="frame-title">Derecho Tributario y Aduanero</div>
+        <a href="#" class="frame-btn" onclick="toggleSeccion('areas-tributario'); return false;">Más Detalles</a>
+      </div>
+    </div>
+    <div class="frame-card reveal rd5">
+      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600" alt="Propiedad Intelectual">
+      <div class="frame-overlay">
+        <div class="frame-icon"></div>
+        <div class="frame-title">Propiedad Intelectual</div>
+        <a href="#" class="frame-btn" onclick="toggleSeccion('areas-propiedad'); return false;">Más Detalles</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENIDO DESPLEGABLE ÁREAS -->
+  <div id="areas-comercial" class="seccion-desplegable">
+    <h3>Derecho Comercial Internacional</h3>
+    <p>Asesoramiento en transacciones comerciales internacionales, contratos de distribución, joint ventures y arbitraje comercial internacional.</p>
+  </div>
+
+  <div id="areas-aguas" class="seccion-desplegable">
+    <h3>Derecho de Aguas y Recursos</h3>
+    <p>Consultoría en gestión de recursos hídricos, concesiones, permisos ambientales y regulación del sector de recursos naturales.</p>
+  </div>
+
+  <div id="areas-transportes" class="seccion-desplegable">
+    <h3>Transportes y Seguros</h3>
+    <p>Asesoramiento legal en logística, transporte multimodal, seguros marítimos y aéreos, y regulación del sector transporte.</p>
+  </div>
+
+  <div id="areas-tributario" class="seccion-desplegable">
+    <h3>Derecho Tributario y Aduanero</h3>
+    <p>Planificación fiscal internacional, defensa en procedimientos aduaneros, compliance tributario y representación ante autoridades fiscales.</p>
+  </div>
+
+  <div id="areas-propiedad" class="seccion-desplegable">
+    <h3>Propiedad Intelectual</h3>
+    <p>Protección de marcas, patentes, derechos de autor, secretos industriales y litigios de propiedad intelectual.</p>
+  </div>
+</section>
+
+<!-- Blog -->
+<div class="sec-light">
+  <p class="section-tag reveal">Últimas publicaciones</p>
+  <h2 class="section-title reveal">Blogs Recientes</h2>
+  <p class="section-desc reveal">Puedes contar con nuestro equipo para los últimos artículos de LawTech.</p>
+  <div class="blog-grid reveal">
+    <div class="blog-card">
+      <img src="https://i.postimg.cc/x8n4VD3c/Innovacin_acceso_justicia_56a5e46a27.jpg" alt="Derecho Digital">
+      <div class="blog-body">
+        <div class="blog-date">23 Junio 2026</div>
+        <div class="blog-title">Novedades en Derecho Digital...</div>
+        <div class="blog-excerpt">Apuntes de práctica y directivas sobre procedimientos en la era digital y la economía tecnológica...</div>
+        <a href="https://ejemplo.com/blog/derecho-digital" class="btn-read" target="_blank">Leer Más</a>
+      </div>
+    </div>
+    <div class="blog-card">
+      <img src="https://i.postimg.cc/tJpMGQNR/Tributacin_en_la_economa_digital_9f68be5822.jpg" alt="Innovación Legal">
+      <div class="blog-body">
+        <div class="blog-date">23 Junio 2026</div>
+        <div class="blog-title">Innovación y Acceso a la Justicia</div>
+        <div class="blog-excerpt">Manejo y uso compartido de datos privados y su impacto en la práctica legal contemporánea...</div>
+        <a href="https://ejemplo.com/blog/innovacion-justicia" class="btn-read" target="_blank">Leer Más</a>
+      </div>
+    </div>
+    <div class="blog-card">
+      <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600" alt="Tributación Digital">
+      <div class="blog-body">
+        <div class="blog-date">23 Junio 2026</div>
+        <div class="blog-title">Tributación en la Economía Digital...</div>
+        <div class="blog-excerpt">En asociación con expertos internacionales en política de TIC para economías emergentes...</div>
+        <a href="https://ejemplo.com/blog/tributacion-digital" class="btn-read" target="_blank">Leer Más</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Partners -->
+<div class="sec-light" style="padding-top:40px;padding-bottom:60px;border-top:1px solid #ddd;">
+  <p class="section-tag reveal">Nuestros Socios</p>
+  <div class="partners-row reveal">
+    <div class="partner">Lorem Impsum</div>
+    <div class="partner">Lorem Impsum</div>
+    <div class="partner">Lorem Impsum</div>
+    <div class="partner">Lorem Impsum</div>
+    <div class="partner">Lorem Impsum</div>
+  </div>
+</div>
+
+<!-- ══ CONTACTO ══ -->
+<section id="contacto" class="sec-darker">
+  <p class="section-tag reveal">Hablemos</p>
+  <h2 class="section-title reveal">Contacto</h2>
+  <p class="section-desc reveal">Estamos disponibles para atender sus necesidades jurídicas. Escríbanos y le responderemos a la brevedad.</p>
+
+  
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-deco"></div>
+  <div class="footer-deco footer-deco2"></div>
+
+  <div class="footer-grid reveal">
+    <div class="footer-col">
+      <h4>Dirección</h4>
+      <p>Calle #0000</p>
+      <p>Cartagena de Indias, Colombia</p>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <a href="mailto:info@alejandraptz.co">Correo: info@alejandraptz.co</a>
+      <a href="tel:+5730143986XX">Celular: +57 301 43986XX</a>
+    </div>
+    <div class="footer-col">
+      <h4>Boletín</h4>
+      <p style="margin-bottom:8px;font-size:0.78rem;">Manténgase actualizado suscribiéndose a nuestro boletín</p>
+      <form class="nl-form" onsubmit="return false;">
+        <input type="email" placeholder="tu.correo@email.com">
+        <button type="submit">Subscribirse</button>
+      </form>
+    </div>
+    <div class="footer-col">
+      <h4>Siguenos</h4>
+      <div class="social-row">
+        <a href="https://www.facebook.com/TU_USUARIO" target="_blank" title="Facebook">f</a>
+        <a href="https://www.x.com/TU_USUARIO" target="_blank" title="X / Twitter">𝕏</a>
+        <a href="https://www.instagram.com/alepertuzg" target="_blank" title="Instagram">◎</a>
+        <a href="https://www.linkedin.com/in/TU_USUARIO" target="_blank" title="LinkedIn">in</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 Alejandra Pertuz — Servicios Legales. Todos los derechos reservados.</p>
+    <p>Lawyers Hub · para abogados</p>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Active nav highlight
+  const secs = document.querySelectorAll('section[id]');
+  const lnks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    secs.forEach(s => { if(scrollY >= s.offsetTop - 100) cur = s.id; });
+    lnks.forEach(a => { a.style.color = a.getAttribute('href')==='#'+cur ? 'var(--cyan)' : ''; });
+  });
+
+  // Función única para todas las secciones desplegables - VERSIÓN MEJORADA
+function toggleSeccion(id) {
+  console.log('=== DEBUG toggleSeccion ===');
+  console.log('ID solicitado:', id);
+  
+  // Encontrar la sección
+  const el = document.getElementById(id);
+  if (!el) {
+    console.error('ERROR: No se encontró elemento con id:', id);
+    return;
+  }
+  
+  console.log('Elemento encontrado:', el);
+  console.log('Clases del elemento:', el.className);
+  console.log('Estilo display actual:', el.style.display);
+  console.log('Estilo computed display:', window.getComputedStyle(el).display);
+  
+  // Verificar si ya está visible
+  const isVisible = window.getComputedStyle(el).display !== 'none';
+  console.log('¿Está visible?', isVisible);
+  
+  if (isVisible) {
+    // Si está visible, ocultarla
+    el.style.display = 'none';
+    console.log('Sección ocultada');
+  } else {
+    // Si no está visible, mostrar solo esta y ocultar las demás
+    const todasLasSecciones = document.querySelectorAll('.seccion-desplegable');
+    console.log('Total de secciones:', todasLasSecciones.length);
+    
+    todasLasSecciones.forEach(function(seccion) {
+      if (seccion.id !== id) {
+        seccion.style.display = 'none';
+        console.log('Ocultada sección:', seccion.id);
+      }
+    });
+    
+    // Mostrar la sección solicitada
+    el.style.display = 'block';
+    console.log('Mostrada sección:', id);
+    
+    // Hacer scroll suave
+    setTimeout(() => {
+      el.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center'
+      });
+    }, 100);
+  }
+  
+  console.log('=== FIN DEBUG ===');
+}
+</script>
+</body>
+</html>
